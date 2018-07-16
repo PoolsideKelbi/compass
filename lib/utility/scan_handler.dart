@@ -8,7 +8,7 @@ import 'package:qr_reader/qr_reader.dart';
 
 abstract class ThyScanContract {
   void onScanSuccess(String qrText);
-  void onScanFailure(String errorText);
+  void onScanFailure(Exception exception);
 }
 
 
@@ -28,14 +28,16 @@ class ThyScanHandler {
         .setTorchEnabled(false)
         .setHandlePermissions(true)
         .setExecuteAfterPermissionGranted(true)
-        .scan();
+        .scan().catchError((exception) => throw new Exception("User permission to access the camera is needed."));
   }
 
   performScan(String email) async {
-    String qrText = await _scan();
-    api.scan(email, qrText)
-    .then((filler) => _contract.onScanSuccess(qrText))
-    .catchError((exception) => _contract.onScanFailure(exception.toString().substring(11)));
+    _scan().then((qrText) {
+      api.scan(email, qrText)
+      .then((_) => _contract.onScanSuccess(qrText))
+      .catchError((exception) => _contract.onScanFailure(exception));
+    })
+    .catchError((exception) => _contract.onScanFailure(exception));
   }
 
 

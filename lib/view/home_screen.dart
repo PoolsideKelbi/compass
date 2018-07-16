@@ -45,7 +45,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
             borderRadius: BorderRadius.circular(10.0),
             onTap: () {
               setState(() => _isLoading = true);
-              isOffline ? this.onScanFailure(constants.Connection.connection_none) 
+              isOffline ? this.onScanFailure(Exception(constants.Connection.connection_none)) 
                         : _scanHandler.performScan(_user.email);
             },
             child: new Image(
@@ -137,13 +137,13 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
   }
 
   @override
-  void onScanFailure(String errorText) {
+  void onScanFailure(Exception exception) {
     setState(() => _isLoading = false);
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => new SimpleDialog(
-        children: <Widget>[new ThyDialogContent.sayingNo(errorText)],
+        children: <Widget>[new ThyDialogContent.sayingNo(exception.toString().substring(11))],
         contentPadding: EdgeInsets.all(0.0),
       ),
     );
