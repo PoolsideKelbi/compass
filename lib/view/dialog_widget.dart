@@ -33,6 +33,7 @@ class ThyDialogContent extends StatelessWidget {
 
     var logoContainer = new Ink(
       height: 100.0,
+      width: 100.0,
       decoration: new BoxDecoration(
         gradient: new LinearGradient(
           colors: [thyColor[500], thyColor[300]])
