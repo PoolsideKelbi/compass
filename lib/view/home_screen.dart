@@ -84,6 +84,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
           padding: const EdgeInsets.all(2.0),
           child: new LinearProgressIndicator(
             valueColor: new AlwaysStoppedAnimation(Colors.teal[200]),
+            backgroundColor: Colors.white,
           ),
         )
         : new Text(
