@@ -8,7 +8,7 @@ import 'dart:async';
 class ThyRestDatasource {
 
 
-  ThyNetworkHandler _netHandler = new ThyNetworkHandler();
+  ThyNetworkHandler _networkHandler = new ThyNetworkHandler();
 
   static final baseUrl = 'http://compasss.mocklab.io';
   static final loginURL = baseUrl + '/login';
@@ -16,7 +16,7 @@ class ThyRestDatasource {
 
 
   Future<ThyUser> login(String email, String password) {
-    return _netHandler.post(
+    return _networkHandler.post(
       loginURL,
       headers: {"Content-Type": "application/json"},
       body: {"email": email, "password": password},
@@ -28,7 +28,7 @@ class ThyRestDatasource {
   
 
   Future<Null> scan(String email, String qrText) {
-    return _netHandler.post(scanURL,
+    return _networkHandler.post(scanURL,
         headers: {"Content-Type": "application/json"},
         body: {"email": email, "qr_string": qrText}).then((dynamic data) {
       if (data["error"]) throw new Exception(data["message"]);

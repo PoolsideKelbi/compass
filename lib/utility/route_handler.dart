@@ -4,6 +4,24 @@ import 'package:compass_try03/view/login_screen.dart';
 import 'package:flutter/material.dart';
 
 
+class _ThyPageRoute<T> extends MaterialPageRoute<T> {
+
+  _ThyPageRoute({RouteSettings settings, WidgetBuilder builder})
+  : super(settings: settings, builder: builder);
+
+  @override
+  Widget buildTransitions(context, enterAnimation, exitAnimation, child) {
+    return new FadeTransition(
+      opacity: animation,
+      child: child,
+    );
+  }
+
+  Duration transitionDuration = new Duration(milliseconds: 400);
+
+}
+
+
 
 Route getRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -13,10 +31,9 @@ Route getRoute(RouteSettings settings) {
   }
 }
 
-PageRouteBuilder _buildRoute(RouteSettings settings, Widget builder) {
-  return new PageRouteBuilder(
-    opaque: true,
+_ThyPageRoute _buildRoute(RouteSettings settings, Widget child) {
+  return new _ThyPageRoute(
     settings: settings,
-    pageBuilder: (context, animation, secondAnimation) => builder,
+    builder: (context) => child,
   );
 }
