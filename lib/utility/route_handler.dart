@@ -6,8 +6,13 @@ import 'package:flutter/material.dart';
 
 class _ThyPageRoute<T> extends MaterialPageRoute<T> {
 
+
   _ThyPageRoute({RouteSettings settings, WidgetBuilder builder})
   : super(settings: settings, builder: builder);
+
+
+  Duration transitionDuration = new Duration(milliseconds: 400);
+
 
   @override
   Widget buildTransitions(context, enterAnimation, exitAnimation, child) {
@@ -17,7 +22,6 @@ class _ThyPageRoute<T> extends MaterialPageRoute<T> {
     );
   }
 
-  Duration transitionDuration = new Duration(milliseconds: 400);
 
 }
 

@@ -30,6 +30,7 @@ class ThyScanHandler {
         .setExecuteAfterPermissionGranted(true)
         .scan().catchError((exception) => throw new Exception("User permission to access the camera is needed."));
   }
+  
 
   performScan(String email) async {
     _scan().then((qrText) {
