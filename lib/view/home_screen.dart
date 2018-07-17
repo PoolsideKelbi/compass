@@ -96,9 +96,11 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
     return new Scaffold(
       body: new Ink(
         decoration: new BoxDecoration(
-            image: new DecorationImage(
-                image: AssetImage(constants.Assets.background_path),
-                fit: BoxFit.cover)),
+          image: new DecorationImage(
+            image: AssetImage(constants.Assets.background_path),
+            fit: BoxFit.cover
+          )
+        ),
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

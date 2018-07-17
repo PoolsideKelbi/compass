@@ -122,14 +122,14 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
       ),
     );
 
-    return new Scaffold(
-      key: _scaffoldKey,
-      body: new Container(
-        decoration: new BoxDecoration(
-            image: new DecorationImage(
-                image: AssetImage(constants.Assets.background_path),
-                fit: BoxFit.cover)),
-        child: new Column(
+    return new Container(
+      decoration: new BoxDecoration(
+        image: new DecorationImage(
+          image: AssetImage(constants.Assets.background_path),
+          fit: BoxFit.cover)),
+        child: new Scaffold(
+          key: _scaffoldKey,
+          body: new Column(
           children: <Widget>[
             new Expanded(child: logoImage),
             new Form(

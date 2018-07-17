@@ -25,7 +25,7 @@ void main() {
 }
 
 final thyTheme = new ThemeData(
-    backgroundColor: Colors.teal[700],
+    scaffoldBackgroundColor: Colors.transparent,
     splashColor: Colors.teal[100],
     buttonColor: Colors.teal[200],
     primaryColor: Colors.teal[200],
