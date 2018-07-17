@@ -170,7 +170,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
     loggenInUser = user;
     emailController.clear();
     passwordController.clear();
-    Navigator.of(context).pushReplacementNamed('/home');
+    Navigator.of(context).pushReplacementNamed('home');
   }
 
   @override

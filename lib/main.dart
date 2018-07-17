@@ -1,7 +1,5 @@
-import 'package:compass_try03/view/home_screen.dart';
-import 'package:compass_try03/view/login_screen.dart';
 import 'package:compass_try03/utility/connectivity_handler.dart' show initialize;
-
+import 'package:compass_try03/utility/route_handler.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,12 +7,11 @@ import 'package:flutter/material.dart';
 class ThyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    initialize();
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Compass',
-      home: new ThyLoginScreen(),
-      routes: thyRoutes,
+      initialRoute: 'login',
+      onGenerateRoute: getRoute,
       theme: thyTheme,
     );
   }
@@ -22,15 +19,13 @@ class ThyApp extends StatelessWidget {
 
 
 
-void main() => runApp(new ThyApp());
-
-final thyRoutes = {
-  '/home': (_) => new ThyHomeScreen(),
-  '/login': (_) => new ThyLoginScreen()
-};
+void main() {
+  initialize();
+  runApp(new ThyApp());
+}
 
 final thyTheme = new ThemeData(
-    backgroundColor: Colors.transparent,
+    backgroundColor: Colors.teal[700],
     splashColor: Colors.teal[100],
     buttonColor: Colors.teal[200],
     primaryColor: Colors.teal[200],

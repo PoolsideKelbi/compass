@@ -77,7 +77,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
         onPressed: _isLoading ? null 
                               : () {
           loggenInUser = null;
-          Navigator.of(context).pushReplacementNamed('/login');
+          Navigator.of(context).pushReplacementNamed('login');
         },
         child: _isLoading
         ? new Padding(
