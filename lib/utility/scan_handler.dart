@@ -9,6 +9,7 @@ import 'package:qr_reader/qr_reader.dart';
 abstract class ThyScanContract {
   void onScanSuccess(String qrText);
   void onScanFailure(Exception exception);
+  void onScanCancelled();
 }
 
 
@@ -34,6 +35,7 @@ class ThyScanHandler {
 
   performScan(String email) async {
     _scan().then((qrText) {
+      qrText == null ? _contract.onScanCancelled() :
       api.scan(email, qrText)
       .then((_) => _contract.onScanSuccess(qrText))
       .catchError((exception) => _contract.onScanFailure(exception));

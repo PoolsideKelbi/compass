@@ -84,6 +84,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
         style: Theme.of(context).textTheme.body1,
         decoration: new InputDecoration(
           hintText: constants.LoginScreen.email_hinttext,
+          hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.white70)
         ),
       ),
     );
@@ -99,6 +100,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
         style: Theme.of(context).textTheme.body1,
         decoration: new InputDecoration(
           hintText: constants.LoginScreen.password_hinttext,
+          hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.white70)
         ),
       ),
     );
@@ -126,32 +128,35 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
       decoration: new BoxDecoration(
         image: new DecorationImage(
           image: AssetImage(constants.Assets.background_path),
-          fit: BoxFit.cover)),
-        child: new Scaffold(
-          key: _scaffoldKey,
-          body: new Column(
-          children: <Widget>[
-            new Expanded(child: logoImage),
-            new Form(
-              key: _formKey,
-              child: new Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    loginLabel,
-                    emailField,
-                    passwordField,
-                    loginButton
-                  ],
-                ),
+          fit: BoxFit.fitHeight,
+          alignment: Alignment.centerLeft
+        )
+      ),
+      child: new Scaffold(
+        key: _scaffoldKey,
+        body: new Column(
+        children: <Widget>[
+          new Expanded(child: logoImage),
+          new Form(
+            key: _formKey,
+            child: new Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  loginLabel,
+                  emailField,
+                  passwordField,
+                  loginButton
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 
 
   void _submit() {

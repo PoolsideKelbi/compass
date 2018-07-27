@@ -4,13 +4,8 @@
     <!--<item android:drawable="@android:color/white" />-->
     <item>
         <bitmap
-            android:gravity="fill"
-            android:src="@mipmap/background"/>
-    </item>
-    <item>
-        <bitmap
             android:gravity="center"
-            android:src="@mipmap/compass_icon"/>
+            android:src="@mipmap/compass_splash"/>
     </item>
     <!-- You can insert your own image assets here -->
     <!-- <item>

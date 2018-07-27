@@ -4,34 +4,22 @@ import 'package:flutter/material.dart';
 
 
 
-class ThyDialogContent extends StatelessWidget {
+class _ThyDialogContent extends StatelessWidget {
 
 
-  MaterialColor thyColor;
-  IconData thyIcon;
-  String thyTitle;
-  String thyDescription;
+  final MaterialColor thyColor;
+  final IconData thyIcon;
+  final String thyTitle;
+  final String thyDescription;
 
 
-  ThyDialogContent.sayingYes(String qrText) {
-    thyColor = Colors.green;
-    thyIcon = Icons.check;
-    thyTitle = constants.DialogWidget.yes_title_text;
-    thyDescription = constants.DialogWidget.yes_description_text.replaceFirst('{r}', qrText);
-  }
-
-  ThyDialogContent.sayingNo(String errorText) {
-    thyColor = Colors.red;
-    thyIcon = Icons.warning;
-    thyTitle = constants.DialogWidget.no_title_text;
-    thyDescription = constants.DialogWidget.no_description_text.replaceFirst('{r}', errorText);
-  }
+  _ThyDialogContent({this.thyColor , this.thyIcon , this.thyTitle , this.thyDescription});
 
 
   @override
   Widget build(BuildContext context) {
 
-    var logoContainer = new Ink(
+    var iconContainer = new Container(
       height: 100.0,
       width: 100.0,
       decoration: new BoxDecoration(
@@ -72,17 +60,56 @@ class ThyDialogContent extends StatelessWidget {
       ),
     );
 
-    return new Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        logoContainer,
-        new Column(
-          children: <Widget>[titleLabel, descriptionLabel, okButton],
-        )
-      ],
+    return new Container(
+      width: 300.0,
+      decoration: new BoxDecoration(
+        color: Colors.white,
+      ),
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          iconContainer,
+          new Column(
+            children: <Widget>[titleLabel, descriptionLabel, okButton],
+          )
+        ],
+      ),
     );
   }
 
 
+}
+
+
+
+void showResponseDialogSaying(String answer, {@required BuildContext context, String message}) {
+  switch (answer) {
+    case 'yes' : showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => new SimpleDialog(
+        contentPadding: const EdgeInsets.all(0.0),
+        children: <Widget>[new _ThyDialogContent(
+          thyColor: Colors.green,
+          thyIcon: Icons.check_circle,
+          thyTitle: constants.DialogWidget.yes_title_text,
+          thyDescription: constants.DialogWidget.yes_description_text.replaceFirst('{r}', message),
+        )],
+      )
+    );break;
+    case 'no' : showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => new SimpleDialog(
+        contentPadding: const EdgeInsets.all(0.0),
+        children: <Widget>[new _ThyDialogContent(
+          thyColor: Colors.red,
+          thyIcon: Icons.warning,
+          thyTitle: constants.DialogWidget.no_title_text,
+          thyDescription: constants.DialogWidget.no_description_text.replaceFirst('{r}', message),
+        )],
+      )
+    );break;
+  }
 }

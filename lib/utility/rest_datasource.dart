@@ -10,7 +10,7 @@ class ThyRestDatasource {
 
   ThyNetworkHandler _networkHandler = new ThyNetworkHandler();
 
-  static final baseUrl = 'http://compasss.mocklab.io';
+  static final baseUrl = 'http://compass.mocklab.io';
   static final loginURL = baseUrl + '/login';
   static final scanURL = baseUrl + '/scan';
 

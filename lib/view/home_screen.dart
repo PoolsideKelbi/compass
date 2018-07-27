@@ -3,7 +3,7 @@ import 'package:compass_try03/utility/auth_handler.dart';
 import 'package:compass_try03/utility/scan_handler.dart';
 import 'package:compass_try03/utility/constants_handler.dart' as constants;
 import 'package:compass_try03/utility/connectivity_handler.dart' show isOffline;
-import 'package:compass_try03/view/dialog_widget.dart';
+import 'package:compass_try03/view/dialog_widget.dart' show showResponseDialogSaying;
 
 import 'package:flutter/material.dart';
 
@@ -31,7 +31,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
   Widget build(context) {
 
     var logoImage = new Padding(
-      padding: const EdgeInsets.fromLTRB(50.0, 60.0, 50.0, 30.0),
+      padding: const EdgeInsets.fromLTRB(50.0, 30.0, 50.0, 30.0),
       child: new Image(
         image: new AssetImage(constants.Assets.compass_logo_image_path),
       ),
@@ -98,7 +98,8 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
         decoration: new BoxDecoration(
           image: new DecorationImage(
             image: AssetImage(constants.Assets.background_path),
-            fit: BoxFit.cover
+            fit: BoxFit.fitHeight,
+            alignment: Alignment.centerLeft
           )
         ),
         child: new Column(
@@ -127,28 +128,24 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
   @override
   void onScanSuccess(String qrText) {
     setState(() => _isLoading = false);
-    qrText == null ? null 
-                   : showDialog(
+    showResponseDialogSaying('yes',
       context: context,
-      barrierDismissible: false,
-      builder: (context) => new SimpleDialog(
-            children: <Widget>[new ThyDialogContent.sayingYes(qrText)],
-            contentPadding: EdgeInsets.all(0.0),
-      ),
+      message: qrText
     );
   }
 
   @override
   void onScanFailure(Exception exception) {
     setState(() => _isLoading = false);
-    showDialog(
+    showResponseDialogSaying('no',
       context: context,
-      barrierDismissible: false,
-      builder: (context) => new SimpleDialog(
-        children: <Widget>[new ThyDialogContent.sayingNo(exception.toString().substring(11))],
-        contentPadding: EdgeInsets.all(0.0),
-      ),
+      message: exception.toString().substring(11)
     );
+  }
+
+  @override
+  void onScanCancelled() {
+    setState(() => _isLoading = false);
   }
 
 
