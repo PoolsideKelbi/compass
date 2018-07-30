@@ -2,7 +2,7 @@ import 'package:compass_try03/model/user_model.dart';
 import 'package:compass_try03/utility/auth_handler.dart';
 import 'package:compass_try03/utility/scan_handler.dart';
 import 'package:compass_try03/utility/constants_handler.dart' as constants show HomeScreen, Assets;
-import 'package:compass_try03/view/dialog_widget.dart' show showResponseDialogSaying;
+import 'package:compass_try03/view/dialog_widget.dart' show showResponseDialogWithColor;
 
 import 'package:flutter/material.dart';
 
@@ -127,7 +127,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
   @override
   void onScanSuccess(String message) {
     setState(() => _isLoading = false);
-    showResponseDialogSaying('yes',
+    showResponseDialogWithColor('green',
       context: context,
       message: message
     );
@@ -136,7 +136,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
   @override
   void onScanFailure(Exception exception) {
     setState(() => _isLoading = false);
-    showResponseDialogSaying('no',
+    showResponseDialogWithColor('red',
       context: context,
       message: exception.toString().substring(11)
     );

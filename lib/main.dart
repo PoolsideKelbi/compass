@@ -2,6 +2,7 @@ import 'package:compass_try03/utility/connectivity_handler.dart' as connectivity
 import 'package:compass_try03/utility/route_handler.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 
 
@@ -22,6 +23,7 @@ class ThyApp extends StatelessWidget {
 
 void main() {
   connectivity.initialize();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(new ThyApp());
 }
 

@@ -32,7 +32,10 @@ class ThyRestDatasource {
   Future<String> scan(String email, String qrResult) {
     String scanURL = scanBaseURL + '/' + qrResult + '/' + email;
     print(scanURL);
-    return _networkHandler.get(scanURL).then((dynamic data) {
+    return _networkHandler.get(
+      scanURL,
+      headers: {"Content-Type": "application/json"},
+    ).then((dynamic data) {
       if (data["request"]) return data["message"];
       //TODO handling this exception's message
       else throw new Exception(data["message"]);

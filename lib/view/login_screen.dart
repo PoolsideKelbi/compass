@@ -21,7 +21,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   final _formKey = new GlobalKey<FormState>();
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  String _email, _password;
+
   bool _isLoading = false;
   bool _isFailure = false;
   String _failureText;
@@ -37,6 +37,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
 
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
+  TextEditingController _serverController = new TextEditingController();
 
 
   String _emailValidator(value) {
@@ -50,7 +51,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   }
 
   String _passwordValidator(value) {
-    String exp = r'^[a-zA-Z0-9_]*$';
+    String exp = r'^[a-zA-Z0-9_.@]*$';
     RegExp regExp = new RegExp(exp);
     if (isOffline) return null;
     else if (value.isEmpty) return constants.LoginScreen.password_error_empty;
@@ -86,7 +87,6 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
         validator: _emailValidator,
         obscureText: false,
         keyboardType: TextInputType.emailAddress,
-        onSaved: (value) => _email = value,
         style: Theme.of(context).textTheme.body1,
         decoration: new InputDecoration(
           hintText: constants.LoginScreen.email_hinttext,
@@ -96,7 +96,6 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
           if(_passwordController.text == '') FocusScope.of(context).requestFocus(_passwordFocusNode);
           else {
             _submit();
-            FocusScope.of(context).requestFocus(_emailFocusNode);
           }
         },
       ),
@@ -110,7 +109,6 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
         validator: _passwordValidator,
         obscureText: true,
         keyboardType: TextInputType.text,
-        onSaved: (value) => _password = value,
         style: Theme.of(context).textTheme.body1,
         decoration: new InputDecoration(
           hintText: constants.LoginScreen.password_hinttext,
@@ -120,8 +118,26 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
           if(_emailController.text == '') FocusScope.of(context).requestFocus(_emailFocusNode);
           else {
             _submit();
-            FocusScope.of(context).requestFocus(_emailFocusNode);
           }
+        },
+      ),
+    );
+
+    var serverField = new Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: new TextFormField(
+        controller: _serverController,
+        obscureText: false,
+        keyboardType: TextInputType.text,
+        style: Theme.of(context).textTheme.body1,
+        decoration: new InputDecoration(
+          hintText: constants.LoginScreen.server_hinttext,
+          hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.white70)
+        ),
+        onFieldSubmitted: (value) {
+          if(_emailController.text == '') FocusScope.of(context).requestFocus(_emailFocusNode);
+          else if(_passwordController.text == '') FocusScope.of(context).requestFocus(_passwordFocusNode);
+          else _submit();
         },
       ),
     );
@@ -168,7 +184,8 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
                   loginLabel,
                   emailField,
                   passwordField,
-                  loginButton
+                  serverField,
+                  loginButton,
                 ],
               ),
             ),
@@ -184,6 +201,7 @@ void dispose() {
   super.dispose();
   _emailController.dispose();
   _passwordController.dispose();
+  _serverController.dispose();
   _emailFocusNode.dispose();
   _passwordFocusNode.dispose();
 }
@@ -193,7 +211,7 @@ void dispose() {
     if (formState.validate()) {
       setState(() => _isLoading = true);
       formState.save();
-      _loginHandler.performLogin(_email, _password);
+      _loginHandler.performLogin(_emailController.text, _passwordController.text);
     }
   }
 
@@ -204,6 +222,7 @@ void dispose() {
     loggedInUser = user;
     _emailController.clear();
     _passwordController.clear();
+    _serverController.clear();
     Navigator.of(context).pushReplacementNamed('home');
   }
 

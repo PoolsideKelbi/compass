@@ -83,9 +83,9 @@ class _ThyDialogContent extends StatelessWidget {
 
 
 
-void showResponseDialogSaying(String answer, {@required BuildContext context, String message}) {
-  switch (answer) {
-    case 'yes' : showDialog(
+void showResponseDialogWithColor(String colorName, {@required BuildContext context, String message}) {
+  switch (colorName) {
+    case 'green' : showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => new SimpleDialog(
@@ -98,7 +98,7 @@ void showResponseDialogSaying(String answer, {@required BuildContext context, St
         )],
       )
     );break;
-    case 'no' : showDialog(
+    case 'red' : showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => new SimpleDialog(

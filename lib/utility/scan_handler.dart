@@ -27,10 +27,7 @@ class ThyScanHandler {
 
   Future<String> _scan() {
     return new QRCodeReader()
-        .setAutoFocusIntervalInMs(5000)
-        .setTorchEnabled(false)
-        .setHandlePermissions(true)
-        .setExecuteAfterPermissionGranted(true)
+        .setAutoFocusIntervalInMs(4000)
         .scan().catchError((exception) => throw new Exception("User permission to access the camera is needed."));
   }
   
