@@ -2,7 +2,6 @@ abstract class LoginScreen {
   static const String email_hinttext = 'Email';
   static const String email_error_empty = 'Email field is left empty.';
   static const String email_error_invalid = 'Email is not valid.';
-  static const String email_error_incorrect = 'Email or Password is incorrect.';
 
   static const String password_hinttext = 'Password';
   static const String password_error_empty = 'Password field is left empty.';
@@ -44,4 +43,10 @@ abstract class Assets {
   static const String compass_logo_image_path = 'assets/compass.png';
   static const String qr_image_path = 'assets/qr-code.png';
   static const String background_path = 'assets/background.jpg';
+}
+
+
+
+abstract class ResponseErrors {
+  static const String login_error_incorrect = 'Email or password is incorrect.';
 }

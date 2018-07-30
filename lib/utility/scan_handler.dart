@@ -1,4 +1,6 @@
 import 'package:compass_try03/utility/rest_datasource.dart';
+import 'package:compass_try03/utility/connectivity_handler.dart' show isOffline;
+import 'package:compass_try03/utility/constants_handler.dart' as constants show Connection;
 
 import 'dart:async';
 
@@ -34,10 +36,11 @@ class ThyScanHandler {
   
 
   performScan(String email) async {
-    _scan().then((qrText) {
-      qrText == null ? _contract.onScanCancelled() :
-      api.scan(email, qrText)
-      .then((_) => _contract.onScanSuccess(qrText))
+    isOffline ? _contract.onScanFailure(Exception(constants.Connection.connection_none)) :
+    _scan().then((qrResult) {
+      qrResult == null ? _contract.onScanCancelled() :
+      api.scan(email, qrResult)
+      .then((message) => _contract.onScanSuccess(message))
       .catchError((exception) => _contract.onScanFailure(exception));
     })
     .catchError((exception) => _contract.onScanFailure(exception));

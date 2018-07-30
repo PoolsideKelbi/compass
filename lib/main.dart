@@ -1,4 +1,4 @@
-import 'package:compass_try03/utility/connectivity_handler.dart' show initialize;
+import 'package:compass_try03/utility/connectivity_handler.dart' as connectivity show initialize;
 import 'package:compass_try03/utility/route_handler.dart';
 
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class ThyApp extends StatelessWidget {
 
 
 void main() {
-  initialize();
+  connectivity.initialize();
   runApp(new ThyApp());
 }
 
@@ -33,6 +33,7 @@ final thyTheme = new ThemeData(
   splashColor: Colors.teal[100],
   buttonColor: Colors.teal[200],
   primaryColor: Colors.teal[200],
+  textSelectionColor: Colors.teal[200],
   errorColor: Colors.red[300],
   hintColor: Colors.teal[200],
   iconTheme: new IconThemeData(color: Colors.white, size: 50.0),

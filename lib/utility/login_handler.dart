@@ -5,7 +5,7 @@ import 'package:compass_try03/model/user_model.dart';
 
 abstract class ThyLoginContract {
   void onLoginSuccess(ThyUser user);
-  void onLoginFailure(String errorMessage);
+  void onLoginFailure(Exception exception);
 }
 
 
@@ -22,7 +22,7 @@ class ThyLoginHandler {
   performLogin(String email, String password) {
     api.login(email, password).then((ThyUser user) {
       _contract.onLoginSuccess(user);
-    }).catchError((exception) => _contract.onLoginFailure(exception.toString()));
+    }).catchError((exception) => _contract.onLoginFailure(exception));
   }
 
   

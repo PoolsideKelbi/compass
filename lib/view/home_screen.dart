@@ -1,8 +1,7 @@
 import 'package:compass_try03/model/user_model.dart';
 import 'package:compass_try03/utility/auth_handler.dart';
 import 'package:compass_try03/utility/scan_handler.dart';
-import 'package:compass_try03/utility/constants_handler.dart' as constants;
-import 'package:compass_try03/utility/connectivity_handler.dart' show isOffline;
+import 'package:compass_try03/utility/constants_handler.dart' as constants show HomeScreen, Assets;
 import 'package:compass_try03/view/dialog_widget.dart' show showResponseDialogSaying;
 
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ import 'package:flutter/material.dart';
 
 
 class ThyHomeScreen extends StatefulWidget {
-  ThyHomeScreenState createState() => new ThyHomeScreenState(loggenInUser);
+  ThyHomeScreenState createState() => new ThyHomeScreenState(loggedInUser);
 }
 
 
@@ -45,8 +44,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
             borderRadius: BorderRadius.circular(10.0),
             onTap: () {
               setState(() => _isLoading = true);
-              isOffline ? this.onScanFailure(Exception(constants.Connection.connection_none)) 
-                        : _scanHandler.performScan(_user.email);
+              _scanHandler.performScan(_user.email);
             },
             child: new Image(
               image: new AssetImage(constants.Assets.qr_image_path),
@@ -76,7 +74,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
       child: new RaisedButton(
         onPressed: _isLoading ? null 
                               : () {
-          loggenInUser = null;
+          loggedInUser = null;
           Navigator.of(context).pushReplacementNamed('login');
         },
         child: _isLoading
@@ -94,6 +92,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
     );
 
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: new Ink(
         decoration: new BoxDecoration(
           image: new DecorationImage(
@@ -126,11 +125,11 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
 
 
   @override
-  void onScanSuccess(String qrText) {
+  void onScanSuccess(String message) {
     setState(() => _isLoading = false);
     showResponseDialogSaying('yes',
       context: context,
-      message: qrText
+      message: message
     );
   }
 

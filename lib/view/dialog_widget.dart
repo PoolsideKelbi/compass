@@ -1,4 +1,4 @@
-import 'package:compass_try03/utility/constants_handler.dart' as constants;
+import 'package:compass_try03/utility/constants_handler.dart' as constants show DialogWidget;
 
 import 'package:flutter/material.dart';
 
@@ -94,7 +94,7 @@ void showResponseDialogSaying(String answer, {@required BuildContext context, St
           thyColor: Colors.green,
           thyIcon: Icons.check_circle,
           thyTitle: constants.DialogWidget.yes_title_text,
-          thyDescription: constants.DialogWidget.yes_description_text.replaceFirst('{r}', message),
+          thyDescription: message,
         )],
       )
     );break;
@@ -107,7 +107,7 @@ void showResponseDialogSaying(String answer, {@required BuildContext context, St
           thyColor: Colors.red,
           thyIcon: Icons.warning,
           thyTitle: constants.DialogWidget.no_title_text,
-          thyDescription: constants.DialogWidget.no_description_text.replaceFirst('{r}', message),
+          thyDescription: message,
         )],
       )
     );break;

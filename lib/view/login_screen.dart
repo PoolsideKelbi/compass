@@ -1,7 +1,7 @@
 import 'package:compass_try03/model/user_model.dart';
 import 'package:compass_try03/utility/login_handler.dart';
 import 'package:compass_try03/utility/auth_handler.dart';
-import 'package:compass_try03/utility/constants_handler.dart' as constants;
+import 'package:compass_try03/utility/constants_handler.dart' as constants show LoginScreen, Connection, Assets;
 import 'package:compass_try03/utility/connectivity_handler.dart' show isOffline;
 
 import 'package:flutter/material.dart';
@@ -24,27 +24,32 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   String _email, _password;
   bool _isLoading = false;
   bool _isFailure = false;
+  String _failureText;
+
+
+  final FocusNode _passwordFocusNode = new FocusNode();
+  final FocusNode _emailFocusNode = new FocusNode();
 
 
   ThyLoginHandler _loginHandler;
   ThyLoginScreenState() { _loginHandler = new ThyLoginHandler(this); }
 
 
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController _emailController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
 
 
-  String emailValidator(value) {
+  String _emailValidator(value) {
     String exp = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = new RegExp(exp);
     if (isOffline) return constants.Connection.connection_none;
     else if (value.isEmpty) return constants.LoginScreen.email_error_empty;
     else if (!regExp.hasMatch(value)) return constants.LoginScreen.email_error_invalid;
-    else if (_isFailure) return constants.LoginScreen.email_error_incorrect;
+    else if (_isFailure) return _failureText;
     else return null;
   }
 
-  String passwordValidator(value) {
+  String _passwordValidator(value) {
     String exp = r'^[a-zA-Z0-9_]*$';
     RegExp regExp = new RegExp(exp);
     if (isOffline) return null;
@@ -76,8 +81,9 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
     var emailField = new Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: new TextFormField(
-        controller: emailController,
-        validator: emailValidator,
+        focusNode: _emailFocusNode,
+        controller: _emailController,
+        validator: _emailValidator,
         obscureText: false,
         keyboardType: TextInputType.emailAddress,
         onSaved: (value) => _email = value,
@@ -86,14 +92,22 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
           hintText: constants.LoginScreen.email_hinttext,
           hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.white70)
         ),
+        onFieldSubmitted: (value) {
+          if(_passwordController.text == '') FocusScope.of(context).requestFocus(_passwordFocusNode);
+          else {
+            _submit();
+            FocusScope.of(context).requestFocus(_emailFocusNode);
+          }
+        },
       ),
     );
 
     var passwordField = new Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: new TextFormField(
-        controller: passwordController,
-        validator: passwordValidator,
+        focusNode: _passwordFocusNode,
+        controller: _passwordController,
+        validator: _passwordValidator,
         obscureText: true,
         keyboardType: TextInputType.text,
         onSaved: (value) => _password = value,
@@ -102,6 +116,13 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
           hintText: constants.LoginScreen.password_hinttext,
           hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.white70)
         ),
+        onFieldSubmitted: (value) {
+          if(_emailController.text == '') FocusScope.of(context).requestFocus(_emailFocusNode);
+          else {
+            _submit();
+            FocusScope.of(context).requestFocus(_emailFocusNode);
+          }
+        },
       ),
     );
 
@@ -158,6 +179,14 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   );
 }
 
+@override
+void dispose() {
+  super.dispose();
+  _emailController.dispose();
+  _passwordController.dispose();
+  _emailFocusNode.dispose();
+  _passwordFocusNode.dispose();
+}
 
   void _submit() {
     final formState = _formKey.currentState;
@@ -172,16 +201,17 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   @override
   void onLoginSuccess(ThyUser user) {
     setState(() => _isLoading = false);
-    loggenInUser = user;
-    emailController.clear();
-    passwordController.clear();
+    loggedInUser = user;
+    _emailController.clear();
+    _passwordController.clear();
     Navigator.of(context).pushReplacementNamed('home');
   }
 
   @override
-  void onLoginFailure(String errorText) {
+  void onLoginFailure(Exception exception) {
     setState(() => _isLoading = false);
     _isFailure = true;
+    _failureText = exception.toString().substring(11);
     _formKey.currentState.validate();
     _isFailure = false;
   }

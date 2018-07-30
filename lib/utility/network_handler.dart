@@ -19,20 +19,37 @@ class ThyNetworkHandler {
 
   Future<dynamic> post(String url, {headers, body, encoding}) {
     return http
-        .post(
-      url,
-      headers: headers,
-      body: _encoder.convert(body),
-      encoding: encoding,
-    )
-        .then((http.Response response) {
-      final String data = response.body;
-      final int statusCode = response.statusCode;
-      if (statusCode < 200 || statusCode > 400 || json == null) {
-        throw new Exception("Error occured while fetching data.");
-      }
-      return _decoder.convert(data);
-    });
+      .post(
+        url,
+        headers: headers,
+        body: _encoder.convert(body),
+        encoding: encoding,
+      )
+      .then((http.Response response) {
+        final String data = response.body;
+        final int statusCode = response.statusCode;
+        if (statusCode < 200 || statusCode > 400 || json == null) {
+          throw new Exception("Error occured while fetching data.");
+        }
+        return _decoder.convert(data);
+      });
+  }
+
+
+  Future<dynamic> get(String url, {headers}) {
+    return http
+      .get(
+        url,
+        headers: headers,
+      )
+      .then((http.Response response) {
+        final String data = response.body;
+        final int statusCode = response.statusCode;
+        if (statusCode < 200 || statusCode > 400 || json == null) {
+          throw new Exception("Error occured while fetching data.");
+        }
+        return _decoder.convert(data);
+      });
   }
 
   
