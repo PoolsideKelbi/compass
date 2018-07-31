@@ -17,13 +17,12 @@ class ThyHomeScreen extends StatefulWidget {
 class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract {
 
 
-  ThyUser _user;
-
-  bool _isLoading = false;
-
-
   ThyScanHandler _scanHandler;
   ThyHomeScreenState(this._user) { _scanHandler = new ThyScanHandler(this); }
+
+
+  ThyUser _user;
+  bool _isLoading = false;
 
 
   @override
@@ -44,7 +43,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
             borderRadius: BorderRadius.circular(10.0),
             onTap: () {
               setState(() => _isLoading = true);
-              _scanHandler.performScan(_user.email);
+              _scanHandler.performScan(_user.email, _user.server);
             },
             child: new Image(
               image: new AssetImage(constants.Assets.qr_image_path),
@@ -66,7 +65,10 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
 
     var emailLabel = new Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: new Text(_user.email),
+      child: new Text(
+        'Email: ' + _user.email,
+        style: Theme.of(context).textTheme.body2,
+      ),
     );
 
     var logoutButton = new Padding(

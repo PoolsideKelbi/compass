@@ -8,7 +8,8 @@ abstract class LoginScreen {
   static const String password_error_short = 'Password must contain 8 characters or more.';
   static const String password_error_alphanum = 'Password must contain only alphanumeric characters.';
 
-  static const String server_hinttext = 'Server address';
+  static const String advanced_tile_text = 'Advanced';
+  static const String server_hinttext = '(Optional) Server address ';
 
   static const String login_button_text = 'LOGIN';
   static const String login_label_text = 'Please login';

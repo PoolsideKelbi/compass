@@ -18,29 +18,29 @@ abstract class ThyScanContract {
 
 class ThyScanHandler {
 
-  
+
   ThyScanContract _contract;
   ThyScanHandler(this._contract);
+  
+  ThyRestDatasource _api = new ThyRestDatasource();
+  
 
-  ThyRestDatasource api = new ThyRestDatasource();
+  performScan(String email, String serverAddress) async {
+    isOffline ? _contract.onScanFailure(Exception(constants.Connection.connection_none)) :
+    _scan().then((qrResult) {
+      qrResult == null ? _contract.onScanCancelled() :
+      _api.scan(email, qrResult)
+      .then((message) => _contract.onScanSuccess(message))
+      .catchError((exception) => _contract.onScanFailure(exception));
+    })
+    .catchError((exception) => _contract.onScanFailure(exception));
+  }
 
 
   Future<String> _scan() {
     return new QRCodeReader()
         .setAutoFocusIntervalInMs(4000)
         .scan().catchError((exception) => throw new Exception("User permission to access the camera is needed."));
-  }
-  
-
-  performScan(String email) async {
-    isOffline ? _contract.onScanFailure(Exception(constants.Connection.connection_none)) :
-    _scan().then((qrResult) {
-      qrResult == null ? _contract.onScanCancelled() :
-      api.scan(email, qrResult)
-      .then((message) => _contract.onScanSuccess(message))
-      .catchError((exception) => _contract.onScanFailure(exception));
-    })
-    .catchError((exception) => _contract.onScanFailure(exception));
   }
 
 

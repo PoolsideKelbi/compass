@@ -9,28 +9,40 @@ import 'dart:async';
 class ThyRestDatasource {
 
 
+  static ThyRestDatasource _instance = new ThyRestDatasource.internal();
+  ThyRestDatasource.internal();
+  factory ThyRestDatasource() => _instance;
+
+
   ThyNetworkHandler _networkHandler = new ThyNetworkHandler();
 
-  static final baseUrl = 'http://82.165.206.127';
-  static final loginURL = baseUrl + '/mobile/login';
-  static final scanBaseURL = baseUrl + '/system/redeem';
+
+  String _baseURL;
+  String _loginURL;
+  String _scanBaseURL;
+
+
+  set baseURL(baseURL) {
+    _baseURL = baseURL;
+    _loginURL = _baseURL + '/mobile/login';
+    _scanBaseURL = _baseURL + '/system/redeem';
+  }
 
 
   Future<ThyUser> login(String email, String password) {
     return _networkHandler.post(
-      loginURL,
+      _loginURL,
       headers: {"Content-Type": "application/json"},
       body: {"email": email, "password": password},
     ).then((dynamic data) {
-      if (data["request"]) return new ThyUser(data["name"], data["email"]);
-      //TODO handling this exception' message
+      if (data["request"]) return new ThyUser(data["name"], data["email"], data["server_name"]);
       else throw new Exception(constants.ResponseErrors.login_error_incorrect);
     });
   }
   
 
   Future<String> scan(String email, String qrResult) {
-    String scanURL = scanBaseURL + '/' + qrResult + '/' + email;
+    String scanURL = _scanBaseURL + '/' + qrResult + '/' + email;
     print(scanURL);
     return _networkHandler.get(
       scanURL,

@@ -39,24 +39,25 @@ final thyTheme = new ThemeData(
   errorColor: Colors.red[300],
   hintColor: Colors.teal[200],
   iconTheme: new IconThemeData(color: Colors.white, size: 50.0),
-  inputDecorationTheme: new InputDecorationTheme(
-    hintStyle: new TextStyle(
-        fontFamily: 'Century Gothic', color: Colors.grey[400]
-    )
-  ),
   textTheme: new TextTheme(
     title: new TextStyle(
       fontFamily: 'Century Gothic',
       fontSize: 20.0,
       fontStyle: FontStyle.normal,
-      color: Colors.white),
+      color: Colors.white
+    ),
     button: new TextStyle(
       fontFamily: 'Century Gothic',
       fontWeight: FontWeight.bold,
       fontSize: 14.0,
-      color: Colors.white),
+      color: Colors.white
+    ),
     body1: new TextStyle(
-      fontFamily: 'Century Gothic', fontSize: 16.0, color: Colors.white),
+      fontFamily: 'Century Gothic', fontSize: 16.0, color: Colors.white
+    ),
+    body2: new TextStyle(
+      fontFamily: 'Century Gothic', fontSize: 10.0, color: Colors.white
+    ),
     caption: new TextStyle(
       fontFamily: 'Century Gothic', fontSize: 10.0, color: Colors.grey
     )

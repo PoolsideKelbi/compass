@@ -2,4 +2,4 @@ import 'package:compass_try03/model/user_model.dart';
 
 
 
-ThyUser loggedInUser = ThyUser('Default', 'Default');
+ThyUser loggedInUser = ThyUser('Default', 'Default', 'Default');

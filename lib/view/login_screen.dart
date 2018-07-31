@@ -22,6 +22,10 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
 
+  ThyLoginHandler _loginHandler;
+  ThyLoginScreenState() { _loginHandler = new ThyLoginHandler(this); }
+
+
   bool _isLoading = false;
   bool _isFailure = false;
   String _failureText;
@@ -29,10 +33,6 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
 
   final FocusNode _passwordFocusNode = new FocusNode();
   final FocusNode _emailFocusNode = new FocusNode();
-
-
-  ThyLoginHandler _loginHandler;
-  ThyLoginScreenState() { _loginHandler = new ThyLoginHandler(this); }
 
 
   TextEditingController _emailController = new TextEditingController();
@@ -123,23 +123,21 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
       ),
     );
 
-    var serverField = new Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: new TextFormField(
-        controller: _serverController,
-        obscureText: false,
-        keyboardType: TextInputType.text,
-        style: Theme.of(context).textTheme.body1,
-        decoration: new InputDecoration(
-          hintText: constants.LoginScreen.server_hinttext,
-          hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.white70)
-        ),
-        onFieldSubmitted: (value) {
-          if(_emailController.text == '') FocusScope.of(context).requestFocus(_emailFocusNode);
-          else if(_passwordController.text == '') FocusScope.of(context).requestFocus(_passwordFocusNode);
-          else _submit();
-        },
+    var serverField = new TextFormField(
+      controller: _serverController,
+      obscureText: false,
+      keyboardType: TextInputType.text,
+      style: Theme.of(context).textTheme.body2,
+      decoration: new InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 5.0),
+        hintText: constants.LoginScreen.server_hinttext,
+        hintStyle: Theme.of(context).textTheme.body2.copyWith(color: Colors.white70)
       ),
+      onFieldSubmitted: (value) {
+        if(_emailController.text == '') FocusScope.of(context).requestFocus(_emailFocusNode);
+        else if(_passwordController.text == '') FocusScope.of(context).requestFocus(_passwordFocusNode);
+          else _submit();
+      },
     );
 
     var loginButton = new Padding(
@@ -186,32 +184,35 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
                   passwordField,
                   serverField,
                   loginButton,
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-@override
-void dispose() {
-  super.dispose();
-  _emailController.dispose();
-  _passwordController.dispose();
-  _serverController.dispose();
-  _emailFocusNode.dispose();
-  _passwordFocusNode.dispose();
-}
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _serverController.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+  }
+
 
   void _submit() {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       setState(() => _isLoading = true);
       formState.save();
-      _loginHandler.performLogin(_emailController.text, _passwordController.text);
+      _loginHandler.performLogin(_emailController.text,
+                                 _passwordController.text,
+                                 'http://' + _serverController.text);
     }
   }
 
