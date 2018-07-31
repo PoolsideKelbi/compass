@@ -9,7 +9,8 @@ import 'package:qr_reader/qr_reader.dart';
 
 
 abstract class ThyScanContract {
-  void onScanSuccess(String qrText);
+  void onRedeemSuccess(String message);
+  void onRedeemFailure(String message);
   void onScanFailure(Exception exception);
   void onScanCancelled();
 }
@@ -25,12 +26,13 @@ class ThyScanHandler {
   ThyRestDatasource _api = new ThyRestDatasource();
   
 
-  performScan(String email, String serverAddress) async {
+  performScan(String email) async {
     isOffline ? _contract.onScanFailure(Exception(constants.Connection.connection_none)) :
     _scan().then((qrResult) {
       qrResult == null ? _contract.onScanCancelled() :
       _api.scan(email, qrResult)
-      .then((message) => _contract.onScanSuccess(message))
+      .then((message) => _isRedeemValid(message) ? _contract.onRedeemSuccess(message)
+                                                 : _contract.onRedeemFailure(message))
       .catchError((exception) => _contract.onScanFailure(exception));
     })
     .catchError((exception) => _contract.onScanFailure(exception));
@@ -41,6 +43,12 @@ class ThyScanHandler {
     return new QRCodeReader()
         .setAutoFocusIntervalInMs(4000)
         .scan().catchError((exception) => throw new Exception("User permission to access the camera is needed."));
+  }
+
+
+  bool _isRedeemValid(String message) {
+    //TODO better validation is necessary
+    return message.length == 32;
   }
 
 
