@@ -1,6 +1,6 @@
 import 'package:compass_try03/utility/network_handler.dart';
 import 'package:compass_try03/model/user_model.dart';
-import 'package:compass_try03/utility/constants_handler.dart' as constants show ResponseErrors;
+import 'package:compass_try03/utility/constants_handler.dart' as constants show ResponseErrors, Defaults;
 
 import 'dart:async';
 
@@ -23,7 +23,7 @@ class ThyRestDatasource {
 
 
   set baseURL(baseURL) {
-    _baseURL = baseURL;
+    _baseURL = 'http://' + (baseURL == '' ? constants.Defaults.default_base_url : baseURL);
     _loginURL = _baseURL + '/mobile/login';
     _scanBaseURL = _baseURL + '/system/redeem';
   }
@@ -35,7 +35,7 @@ class ThyRestDatasource {
       headers: {"Content-Type": "application/json"},
       body: {"email": email, "password": password},
     ).then((dynamic data) {
-      if (data["request"]) return new ThyUser(data["name"], data["email"], data["server_name"]);
+      if (data["request"]) return new ThyUser(data["name"], data["email"]);
       else throw new Exception(constants.ResponseErrors.login_error_incorrect);
     });
   }

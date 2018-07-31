@@ -32,10 +32,8 @@ abstract class Connection {
 
 abstract class DialogWidget {
   static const String yes_title_text = 'Thank You!';
-  static const String yes_description_text = 'Your scan result:\n\n{r}';
 
   static const String no_title_text = 'Warning!';
-  static const String no_description_text = 'A problem occured during your QR scan. {r}';
 
   static const String ok_button_text = 'OK';
 }
@@ -52,4 +50,10 @@ abstract class Assets {
 
 abstract class ResponseErrors {
   static const String login_error_incorrect = 'Email or password is incorrect.';
+}
+
+
+
+abstract class Defaults {
+  static const String default_base_url = '82.165.206.127';
 }

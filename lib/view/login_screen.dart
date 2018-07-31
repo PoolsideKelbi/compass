@@ -212,7 +212,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
       formState.save();
       _loginHandler.performLogin(_emailController.text,
                                  _passwordController.text,
-                                 'http://' + _serverController.text);
+                                 _serverController.text);
     }
   }
 

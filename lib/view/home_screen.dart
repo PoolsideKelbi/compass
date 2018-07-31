@@ -43,7 +43,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
             borderRadius: BorderRadius.circular(10.0),
             onTap: () {
               setState(() => _isLoading = true);
-              _scanHandler.performScan(_user.email, _user.server);
+              _scanHandler.performScan(_user.email);
             },
             child: new Image(
               image: new AssetImage(constants.Assets.qr_image_path),
@@ -127,11 +127,20 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
 
 
   @override
-  void onScanSuccess(String message) {
+  void onRedeemSuccess(String message) {
     setState(() => _isLoading = false);
     showResponseDialogWithColor('green',
       context: context,
       message: message
+    );
+  }
+
+  @override
+  void onRedeemFailure(String message) {
+    setState(() => _isLoading = false);
+    showResponseDialogWithColor('red',
+      context: context,
+      message: message,
     );
   }
 
