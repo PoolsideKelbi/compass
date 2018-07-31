@@ -32,9 +32,7 @@ abstract class Connection {
 
 abstract class DialogWidget {
   static const String yes_title_text = 'Thank You!';
-
   static const String no_title_text = 'Warning!';
-
   static const String ok_button_text = 'OK';
 }
 
@@ -50,6 +48,9 @@ abstract class Assets {
 
 abstract class ResponseErrors {
   static const String login_error_incorrect = 'Email or password is incorrect.';
+  static const String server_error_invalid = 'Server is invalid.';
+
+  static const String generic_error = 'Error occured while fetching data.';
 }
 
 

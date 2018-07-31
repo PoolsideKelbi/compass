@@ -43,7 +43,6 @@ class ThyRestDatasource {
 
   Future<String> scan(String email, String qrResult) {
     String scanURL = _scanBaseURL + '/' + qrResult + '/' + email;
-    print(scanURL);
     return _networkHandler.get(
       scanURL,
       headers: {"Content-Type": "application/json"},

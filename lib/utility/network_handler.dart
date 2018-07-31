@@ -1,3 +1,5 @@
+import 'package:compass_try03/utility/constants_handler.dart' as constants show ResponseErrors;
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -29,10 +31,10 @@ class ThyNetworkHandler {
         final String data = response.body;
         final int statusCode = response.statusCode;
         if (statusCode < 200 || statusCode > 400 || json == null) {
-          throw new Exception("Error occured while fetching data.");
+          throw new Exception(constants.ResponseErrors.generic_error);
         }
         return _decoder.convert(data);
-      });
+      }).catchError((exception) => throw new Exception(constants.ResponseErrors.server_error_invalid));
   }
 
 
@@ -46,7 +48,7 @@ class ThyNetworkHandler {
         final String data = response.body;
         final int statusCode = response.statusCode;
         if (statusCode < 200 || statusCode > 400 || json == null) {
-          throw new Exception("Error occured while fetching data.");
+          throw new Exception(constants.ResponseErrors.generic_error);
         }
         return _decoder.convert(data);
       });
