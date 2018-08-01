@@ -29,28 +29,24 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
   Widget build(context) {
 
     var logoImage = new Padding(
-      padding: const EdgeInsets.fromLTRB(50.0, 30.0, 50.0, 30.0),
+      padding: const EdgeInsets.fromLTRB(50.0, 30.0, 50.0, 10.0),
       child: new Image(
         image: new AssetImage(constants.Assets.compass_logo_image_path),
       ),
     );
 
-    var scanImage = new Expanded(
-      child: new Center(
-        child: new Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: new InkWell(
-            borderRadius: BorderRadius.circular(10.0),
-            onTap: () {
-              setState(() => _isLoading = true);
-              _scanHandler.performScan(_user.email);
-            },
-            child: new Image(
-              image: new AssetImage(constants.Assets.qr_image_path),
-              height: 200.0,
-              width: 200.0,
-            ),
-          ),
+    var scanImage = new Padding(
+      padding: const EdgeInsets.all(50.0),
+      child: new InkWell(
+        borderRadius: BorderRadius.circular(10.0),
+        onTap: () {
+          setState(() => _isLoading = true);
+          _scanHandler.performScan(_user.email);
+        },
+        child: new Image(
+          image: new AssetImage(constants.Assets.qr_image_path),
+          height: 200.0,
+          width: 200.0,
         ),
       ),
     );
@@ -106,8 +102,15 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            logoImage,
-            scanImage,
+            new Expanded(
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  logoImage,
+                  scanImage
+                ],
+              ),
+            ),
             new Padding(
               padding: const EdgeInsets.all(15.0),
               child: new Column(
