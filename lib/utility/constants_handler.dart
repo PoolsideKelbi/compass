@@ -8,11 +8,22 @@ abstract class LoginScreen {
   static const String password_error_short = 'Password must contain 8 characters or more.';
   static const String password_error_alphanum = 'Password must contain only alphanumeric characters.';
 
-  static const String advanced_tile_text = 'Advanced';
+  static const String advanced_button_text = 'ADVANCED';
   static const String server_hinttext = '(Optional) Server address ';
 
   static const String login_button_text = 'LOGIN';
   static const String login_label_text = 'Please login';
+}
+
+
+
+abstract class SettingsWidget {
+  static const String default_server_label = 'Default Server';
+  static const String server_hinttext = 'Server Address';
+  static const String appbar_title = 'Advanced Settings';
+
+  static const String server_error_empty = 'Server address field is left empty.';
+  static const String server_error_invalid = 'Server address is not valid.';
 }
 
 

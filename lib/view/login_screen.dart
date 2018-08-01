@@ -1,7 +1,7 @@
 import 'package:compass_try03/model/user_model.dart';
 import 'package:compass_try03/utility/login_handler.dart';
 import 'package:compass_try03/utility/auth_handler.dart';
-import 'package:compass_try03/utility/constants_handler.dart' as constants show LoginScreen, Connection, Assets;
+import 'package:compass_try03/utility/constants_handler.dart' as constants show LoginScreen, Connection, Assets, Defaults;
 import 'package:compass_try03/utility/connectivity_handler.dart' show isOffline;
 
 import 'package:flutter/material.dart';
@@ -26,6 +26,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   ThyLoginScreenState() { _loginHandler = new ThyLoginHandler(this); }
 
 
+  String _serverAddress = constants.Defaults.default_base_url;
   bool _isLoading = false;
   bool _isFailure = false;
   String _failureText;
@@ -37,7 +38,6 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
 
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
-  TextEditingController _serverController = new TextEditingController();
 
 
   String _emailValidator(value) {
@@ -87,10 +87,10 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
         validator: _emailValidator,
         obscureText: false,
         keyboardType: TextInputType.emailAddress,
-        style: Theme.of(context).textTheme.body1,
+        style: Theme.of(context).textTheme.subhead,
         decoration: new InputDecoration(
           hintText: constants.LoginScreen.email_hinttext,
-          hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.white70)
+          hintStyle: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white70)
         ),
         onFieldSubmitted: (value) {
           if(_passwordController.text == '') FocusScope.of(context).requestFocus(_passwordFocusNode);
@@ -109,10 +109,10 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
         validator: _passwordValidator,
         obscureText: true,
         keyboardType: TextInputType.text,
-        style: Theme.of(context).textTheme.body1,
+        style: Theme.of(context).textTheme.subhead,
         decoration: new InputDecoration(
           hintText: constants.LoginScreen.password_hinttext,
-          hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.white70)
+          hintStyle: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white70)
         ),
         onFieldSubmitted: (value) {
           if(_emailController.text == '') FocusScope.of(context).requestFocus(_emailFocusNode);
@@ -123,25 +123,23 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
       ),
     );
 
-    var serverField = new TextFormField(
-      controller: _serverController,
-      obscureText: false,
-      keyboardType: TextInputType.text,
-      style: Theme.of(context).textTheme.body2,
-      decoration: new InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 5.0),
-        hintText: constants.LoginScreen.server_hinttext,
-        hintStyle: Theme.of(context).textTheme.body2.copyWith(color: Colors.white70)
+    var advancedButton = new Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: new FlatButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed('settings').then((value) {
+            value == null ? null : _serverAddress = value;
+          });
+        },
+        child: new Text(
+          constants.LoginScreen.advanced_button_text,
+          style: Theme.of(context).textTheme.button,
+        ),
       ),
-      onFieldSubmitted: (value) {
-        if(_emailController.text == '') FocusScope.of(context).requestFocus(_emailFocusNode);
-        else if(_passwordController.text == '') FocusScope.of(context).requestFocus(_passwordFocusNode);
-          else _submit();
-      },
     );
 
     var loginButton = new Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 10.0),
       child: new RaisedButton(
         onPressed: _isLoading ? null 
                               : _submit,
@@ -182,7 +180,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
                   loginLabel,
                   emailField,
                   passwordField,
-                  serverField,
+                  advancedButton,
                   loginButton,
                   ],
                 ),
@@ -199,7 +197,6 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _serverController.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
   }
@@ -212,7 +209,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
       formState.save();
       _loginHandler.performLogin(_emailController.text,
                                  _passwordController.text,
-                                 _serverController.text);
+                                 _serverAddress);
     }
   }
 
@@ -223,7 +220,6 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
     loggedInUser = user;
     _emailController.clear();
     _passwordController.clear();
-    _serverController.clear();
     Navigator.of(context).pushReplacementNamed('home');
   }
 

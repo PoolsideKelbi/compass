@@ -30,6 +30,7 @@ void main() {
 
 
 final thyTheme = new ThemeData(
+  canvasColor: Colors.transparent,
   scaffoldBackgroundColor: Colors.transparent,
   backgroundColor: Colors.white,
   splashColor: Colors.teal[100],
@@ -43,7 +44,6 @@ final thyTheme = new ThemeData(
     title: new TextStyle(
       fontFamily: 'Century Gothic',
       fontSize: 20.0,
-      fontStyle: FontStyle.normal,
       color: Colors.white
     ),
     button: new TextStyle(
@@ -52,14 +52,25 @@ final thyTheme = new ThemeData(
       fontSize: 14.0,
       color: Colors.white
     ),
+    subhead: new TextStyle(
+      fontFamily: 'Century Gothic',
+      fontSize: 16.0,
+      color: Colors.white
+    ),
     body1: new TextStyle(
-      fontFamily: 'Century Gothic', fontSize: 16.0, color: Colors.white
+      fontFamily: 'Century Gothic',
+      fontSize: 12.0,
+      color: Colors.white
     ),
     body2: new TextStyle(
-      fontFamily: 'Century Gothic', fontSize: 10.0, color: Colors.white
+      fontFamily: 'Century Gothic',
+      fontSize: 10.0,
+      color: Colors.white
     ),
     caption: new TextStyle(
-      fontFamily: 'Century Gothic', fontSize: 10.0, color: Colors.grey
+      fontFamily: 'Century Gothic',
+      fontSize: 10.0,
+      color: Colors.grey
     )
   )
 );

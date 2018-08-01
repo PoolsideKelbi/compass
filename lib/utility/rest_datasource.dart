@@ -1,6 +1,6 @@
 import 'package:compass_try03/utility/network_handler.dart';
 import 'package:compass_try03/model/user_model.dart';
-import 'package:compass_try03/utility/constants_handler.dart' as constants show ResponseErrors, Defaults;
+import 'package:compass_try03/utility/constants_handler.dart' as constants show ResponseErrors;
 
 import 'dart:async';
 
@@ -23,7 +23,7 @@ class ThyRestDatasource {
 
 
   set baseURL(baseURL) {
-    _baseURL = 'http://' + (baseURL == '' ? constants.Defaults.default_base_url : baseURL);
+    _baseURL = baseURL;
     _loginURL = _baseURL + '/mobile/login';
     _scanBaseURL = _baseURL + '/system/redeem';
   }

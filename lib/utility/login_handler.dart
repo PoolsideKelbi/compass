@@ -20,10 +20,15 @@ class ThyLoginHandler {
   
 
   performLogin(String email, String password, String serverAddress) {
-    _api.baseURL = serverAddress;
+    _api.baseURL = 'https://' + serverAddress;
     _api.login(email, password).then((ThyUser user) {
       _contract.onLoginSuccess(user);
-    }).catchError((exception) => _contract.onLoginFailure(exception));
+    }).catchError((exception) {
+      _api.baseURL = 'http://' + serverAddress;
+      _api.login(email, password).then((ThyUser user) {
+        _contract.onLoginSuccess(user);
+      }).catchError((exception) => _contract.onLoginFailure(exception));
+    });
   }
 
   
