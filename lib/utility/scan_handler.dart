@@ -1,6 +1,6 @@
 import 'package:compass_try03/utility/rest_datasource.dart';
 import 'package:compass_try03/utility/connectivity_handler.dart' show isOffline;
-import 'package:compass_try03/utility/constants_handler.dart' as constants show Connection;
+import 'package:compass_try03/utility/constants_handler.dart' as constants show Connection, DialogWidget;
 
 import 'dart:async';
 
@@ -42,7 +42,7 @@ class ThyScanHandler {
   Future<String> _scan() {
     return new QRCodeReader()
         .setAutoFocusIntervalInMs(4000)
-        .scan().catchError((exception) => throw new Exception("User permission to access the camera is needed."));
+        .scan().catchError((exception) => throw new Exception(constants.DialogWidget.permission_error));
   }
 
 

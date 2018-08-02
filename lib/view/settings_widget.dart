@@ -25,8 +25,8 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
   TextEditingController _serverAddressController = new TextEditingController();
 
   String _serverAddressValidator(String value) {
-    String exp = r'[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)';
-    RegExp regExp = new RegExp(exp);
+    //String exp = r'[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)';
+    //RegExp regExp = new RegExp(exp);
     if(value.isEmpty) return constants.SettingsWidget.server_error_empty;
     //TODO better regex for the url
     //else if(!regExp.hasMatch(value)) return constants.SettingsWidget.server_error_invalid;
@@ -38,7 +38,7 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
   void initState() {
     super.initState();
     _isDefault = _serverAddress == constants.Defaults.default_base_url;
-    _serverAddressController.text = _serverAddress;
+    _isDefault ? null : _serverAddressController.text = _serverAddress;
   }
 
   @override
@@ -54,17 +54,7 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
       actions: <Widget>[
         new IconButton(
           icon: new Icon(Icons.check),
-          onPressed: () {
-            if(_isDefault) {
-              Navigator.of(context).pop(constants.Defaults.default_base_url);
-            }
-            else {
-              if(_formKey.currentState.validate()) {
-                _serverAddress = _serverAddressController.text;
-                Navigator.of(context).pop(_serverAddress);
-              }
-            }
-          },
+          onPressed: _saveSettings,
         )
       ],
     );
@@ -102,6 +92,7 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
             validator: _serverAddressValidator,
             controller: _serverAddressController,
             style: Theme.of(context).textTheme.body1.copyWith(color: Colors.black),
+            onFieldSubmitted: (_) => _saveSettings(),
           ),
         )
       ],
@@ -123,6 +114,20 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
   void dispose() {
     super.dispose();
     _serverAddressController.dispose();
+  }
+
+
+  void _saveSettings() {
+    if(_isDefault) {
+      _serverAddress = constants.Defaults.default_base_url;
+      Navigator.of(context).pop(_serverAddress);
+    }
+    else {
+      if(_formKey.currentState.validate()) {
+        _serverAddress = _serverAddressController.text;
+        Navigator.of(context).pop(_serverAddress);
+      }
+    }
   }
 
 

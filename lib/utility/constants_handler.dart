@@ -45,6 +45,8 @@ abstract class DialogWidget {
   static const String yes_title_text = 'Thank You!';
   static const String no_title_text = 'Warning!';
   static const String ok_button_text = 'OK';
+
+  static const String permission_error = 'User permission to access the camera is needed.';
 }
 
 
