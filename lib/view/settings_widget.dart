@@ -4,16 +4,23 @@ import 'package:flutter/material.dart';
 
 
 
+String _serverAddress = constants.Defaults.default_base_url;
+
+
+
 class ThyAdvancedSettingsScreen extends StatefulWidget {
   @override
   _ThyAdvancedSettingsScreenState createState() => _ThyAdvancedSettingsScreenState();
 }
 
+
+
 class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
 
-  GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  bool _isDefault = true;
+  GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  bool _isDefault;
+
 
   TextEditingController _serverAddressController = new TextEditingController();
 
@@ -24,6 +31,14 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
     //TODO better regex for the url
     //else if(!regExp.hasMatch(value)) return constants.SettingsWidget.server_error_invalid;
     return null;
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _isDefault = _serverAddress == constants.Defaults.default_base_url;
+    _serverAddressController.text = _serverAddress;
   }
 
   @override
@@ -45,7 +60,8 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
             }
             else {
               if(_formKey.currentState.validate()) {
-                Navigator.of(context).pop(_serverAddressController.text);
+                _serverAddress = _serverAddressController.text;
+                Navigator.of(context).pop(_serverAddress);
               }
             }
           },
@@ -73,7 +89,7 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
         ),
         new Divider(
           color: Colors.grey,
-          height: 5.0,
+          height: 0.0,
         ),
         _isDefault ? new Center() : new Form(
           key: _formKey,
@@ -97,7 +113,7 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
     );
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 255, 255, 0.9),
+      backgroundColor: Colors.white,
       appBar: bar,
       body: body,
     );
@@ -109,7 +125,5 @@ class _ThyAdvancedSettingsScreenState extends State<ThyAdvancedSettingsScreen> {
     _serverAddressController.dispose();
   }
 
+
 }
-
-
-
