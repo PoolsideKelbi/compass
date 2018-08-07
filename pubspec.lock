@@ -228,13 +228,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.1"
-  qr_reader:
+  qrcode_reader:
     dependency: "direct main"
     description:
-      name: qr_reader
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.3"
+      path: "."
+      ref: "6faaed2522635d9319152df4f6d8867caa505846"
+      resolved-ref: "6faaed2522635d9319152df4f6d8867caa505846"
+      url: "git://github.com/bcko/flutter_qrcode_reader"
+    source: git
+    version: "0.3.2"
   quiver:
     dependency: transitive
     description:

@@ -29,6 +29,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   String _serverAddress = constants.Defaults.default_base_url;
   bool _isLoading = false;
   bool _isFailure = false;
+  bool _isPasswordVisible = false;
   String _failureText;
 
 
@@ -107,10 +108,15 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
         focusNode: _passwordFocusNode,
         controller: _passwordController,
         validator: _passwordValidator,
-        obscureText: true,
+        obscureText: !_isPasswordVisible,
         keyboardType: TextInputType.text,
         style: Theme.of(context).textTheme.subhead,
         decoration: new InputDecoration(
+          suffixIcon: new IconButton(
+            icon: new Icon(_isPasswordVisible ? Icons.visibility_off : Icons.visibility),
+            onPressed: () => setState(() => _isPasswordVisible = !_isPasswordVisible),
+            iconSize: 20.0,  
+          ),
           hintText: constants.LoginScreen.password_hinttext,
           hintStyle: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white70)
         ),

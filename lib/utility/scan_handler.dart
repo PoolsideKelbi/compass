@@ -4,7 +4,7 @@ import 'package:compass_try03/utility/constants_handler.dart' as constants show 
 
 import 'dart:async';
 
-import 'package:qr_reader/qr_reader.dart';
+import 'package:qrcode_reader/QRCodeReader.dart';
 
 
 
