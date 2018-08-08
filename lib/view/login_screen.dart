@@ -175,7 +175,13 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
         key: _scaffoldKey,
         body: new Column(
         children: <Widget>[
-          new Expanded(child: logoImage),
+          new Expanded(
+            child: new GestureDetector(
+              child: logoImage,
+              onTap: () => _emailFocusNode.hasFocus ? _emailFocusNode.unfocus() 
+                                                    : _passwordFocusNode.unfocus(),
+            ),
+          ),
           new Form(
             key: _formKey,
             child: new Padding(
