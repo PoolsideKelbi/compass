@@ -30,7 +30,7 @@ void main() {
 
 
 final thyTheme = new ThemeData(
-  canvasColor: Colors.teal[100],
+  canvasColor: Color(0xEEFFFFFF),
   scaffoldBackgroundColor: Colors.transparent,
   backgroundColor: Colors.white,
   splashColor: Colors.teal[100],

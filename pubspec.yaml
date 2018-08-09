@@ -7,7 +7,6 @@ dependencies:
   qrcode_reader:
     git:
       url: git://github.com/bcko/flutter_qrcode_reader
-      ref: 7cf9f5b611e6da746c5ff4e010d95939e745322f
   connectivity: ^0.3.1
 
 dev_dependencies:

@@ -35,7 +35,7 @@ class ThyRestDatasource {
       headers: {"Content-Type": "application/json"},
       body: {"email": email, "password": password},
     ).then((dynamic data) {
-      if (data["request"]) return new ThyUser(data["name"], data["email"]);
+      if (data["request"]) return new ThyUser.fromMap(data);
       else throw new Exception(constants.ResponseErrors.login_error_incorrect);
     });
   }

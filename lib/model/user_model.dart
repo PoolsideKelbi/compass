@@ -10,6 +10,8 @@ class ThyUser {
 
 
   ThyUser(this._name, this._email);
+  
+  ThyUser.mock();
 
   ThyUser.fromMap(Map<String, dynamic> json) {
     _name = json['name'];
