@@ -71,10 +71,7 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: new RaisedButton(
         onPressed: _isLoading ? null 
-                              : () {
-          loggedInUser = null;
-          Navigator.of(context).pushReplacementNamed('login');
-        },
+                              : onLogOut,
         child: _isLoading
         ? new Padding(
           padding: const EdgeInsets.all(2.0),
@@ -126,6 +123,12 @@ class ThyHomeScreenState extends State<ThyHomeScreen> implements ThyScanContract
         ),
       ),
     );
+  }
+
+
+  void onLogOut() {
+    loggedInUser = ThyUser.mock();
+    Navigator.of(context).pushReplacementNamed('login');
   }
 
 

@@ -8,6 +8,7 @@ dependencies:
     git:
       url: git://github.com/bcko/flutter_qrcode_reader
   connectivity: ^0.3.1
+  shared_preferences: ^0.4.3
 
 dev_dependencies:
   flutter_test:

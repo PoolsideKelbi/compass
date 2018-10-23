@@ -69,5 +69,7 @@ abstract class ResponseErrors {
 
 
 abstract class Defaults {
-  static const String default_base_url = '82.165.206.127';
+  static const String test_base_url = '82.165.206.127';
+  static const String aus_base_url = '82.165.250.108';
+  static const String aze_base_url = '82.165.250.199';
 }

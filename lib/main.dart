@@ -1,5 +1,6 @@
 import 'package:compass_try03/utility/connectivity_handler.dart' as connectivity show initialize;
 import 'package:compass_try03/utility/route_handler.dart';
+import 'package:compass_try03/utility/auth_handler.dart' as auth;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +13,7 @@ class ThyApp extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Compass',
-      initialRoute: 'login',
+      initialRoute: auth.loggedInUser.isMock ? 'login' : 'home',
       onGenerateRoute: getRoute,
       theme: thyTheme,
     );
@@ -21,8 +22,9 @@ class ThyApp extends StatelessWidget {
 
 
 
-void main() {
+void main() async{
   connectivity.initialize();
+  await auth.initialize();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(new ThyApp());
 }
@@ -30,7 +32,7 @@ void main() {
 
 
 final thyTheme = new ThemeData(
-  canvasColor: Color(0xEEFFFFFF),
+  canvasColor: Color(0xF0B2DFDB),
   scaffoldBackgroundColor: Colors.transparent,
   backgroundColor: Colors.white,
   splashColor: Colors.teal[100],
@@ -72,5 +74,5 @@ final thyTheme = new ThemeData(
       fontSize: 10.0,
       color: Colors.grey
     )
-  )
+  ),
 );

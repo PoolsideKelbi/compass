@@ -26,10 +26,10 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   ThyLoginScreenState() { _loginHandler = new ThyLoginHandler(this); }
 
 
-  String _serverAddress = constants.Defaults.default_base_url;
+  String _serverAddress;
   bool _isLoading = false;
   bool _isFailure = false;
-  bool _isPasswordVisible = false;
+  bool _isLocationSelected = false;
   String _failureText;
 
 
@@ -108,15 +108,10 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
         focusNode: _passwordFocusNode,
         controller: _passwordController,
         validator: _passwordValidator,
-        obscureText: !_isPasswordVisible,
+        obscureText: true,//!_isPasswordVisible,
         keyboardType: TextInputType.text,
         style: Theme.of(context).textTheme.subhead,
         decoration: new InputDecoration(
-          suffixIcon: new IconButton(
-            icon: new Icon(_isPasswordVisible ? Icons.visibility_off : Icons.visibility),
-            onPressed: () => setState(() => _isPasswordVisible = !_isPasswordVisible),
-            iconSize: 20.0,  
-          ),
           hintText: constants.LoginScreen.password_hinttext,
           hintStyle: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white70)
         ),
@@ -129,25 +124,35 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
       ),
     );
 
-    var advancedButton = new Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: new FlatButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('settings').then((value) {
-            value == null ? null : _serverAddress = value;
-          });
-        },
-        child: new Text(
-          constants.LoginScreen.advanced_button_text,
-          style: Theme.of(context).textTheme.button,
+    var locationDropdown = new DropdownButton(
+      items: <DropdownMenuItem>[
+        new DropdownMenuItem(
+          child: new Text('Azerbaijan'),
+          value: constants.Defaults.aze_base_url,
         ),
-      ),
+        new DropdownMenuItem(
+          child: new Text('Austria'),
+          value: constants.Defaults.aus_base_url,
+        ),
+        new DropdownMenuItem(
+          child: new Text('Test'),
+          value: constants.Defaults.test_base_url,
+        )
+      ],
+      onChanged: (value) {
+        _isLocationSelected = true;
+        _serverAddress = value;
+        setState(() {});
+      },
+      style: Theme.of(context).textTheme.button,
+      hint: new Text('LOCATION'),
+      value: _serverAddress,
     );
 
     var loginButton = new Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 10.0),
       child: new RaisedButton(
-        onPressed: _isLoading ? null 
+        onPressed: _isLoading || !_isLocationSelected ? null 
                               : _submit,
         child: _isLoading
             ? new Padding(
@@ -189,10 +194,15 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
               child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  loginLabel,
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      loginLabel,
+                      locationDropdown
+                    ],
+                  ),
                   emailField,
                   passwordField,
-                  advancedButton,
                   loginButton,
                   ],
                 ),
@@ -230,6 +240,7 @@ class ThyLoginScreenState extends State<ThyLoginScreen> implements ThyLoginContr
   void onLoginSuccess(ThyUser user) {
     setState(() => _isLoading = false);
     loggedInUser = user;
+    getLoggedInUser().then((thing) => print(thing['name']));
     _emailController.clear();
     _passwordController.clear();
     Navigator.of(context).pushReplacementNamed('home');
