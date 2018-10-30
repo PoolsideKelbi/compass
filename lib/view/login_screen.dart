@@ -1,8 +1,8 @@
-import 'package:compass_try03/model/user_model.dart';
-import 'package:compass_try03/utility/login_handler.dart';
-import 'package:compass_try03/utility/auth_handler.dart';
-import 'package:compass_try03/utility/constants_handler.dart' as constants show LoginScreen, Connection, Assets, Defaults;
-import 'package:compass_try03/utility/connectivity_handler.dart' show isOffline;
+import 'package:compassscan/model/user_model.dart';
+import 'package:compassscan/utility/login_handler.dart';
+import 'package:compassscan/utility/auth_handler.dart';
+import 'package:compassscan/utility/constants_handler.dart' as constants show LoginScreen, Connection, Assets, Defaults;
+import 'package:compassscan/utility/connectivity_handler.dart' show isOffline;
 
 import 'package:flutter/material.dart';
 

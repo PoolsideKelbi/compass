@@ -1,6 +1,6 @@
-import 'package:compass_try03/utility/network_handler.dart';
-import 'package:compass_try03/model/user_model.dart';
-import 'package:compass_try03/utility/constants_handler.dart' as constants show ResponseErrors;
+import 'package:compassscan/utility/network_handler.dart';
+import 'package:compassscan/model/user_model.dart';
+import 'package:compassscan/utility/constants_handler.dart' as constants show ResponseErrors;
 
 import 'dart:async';
 

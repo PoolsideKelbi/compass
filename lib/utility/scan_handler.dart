@@ -1,6 +1,6 @@
-import 'package:compass_try03/utility/rest_datasource.dart';
-import 'package:compass_try03/utility/connectivity_handler.dart' show isOffline;
-import 'package:compass_try03/utility/constants_handler.dart' as constants show Connection, DialogWidget;
+import 'package:compassscan/utility/rest_datasource.dart';
+import 'package:compassscan/utility/connectivity_handler.dart' show isOffline;
+import 'package:compassscan/utility/constants_handler.dart' as constants show Connection, DialogWidget;
 
 import 'dart:async';
 

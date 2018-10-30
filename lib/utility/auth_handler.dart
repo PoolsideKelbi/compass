@@ -1,4 +1,4 @@
-import 'package:compass_try03/model/user_model.dart';
+import 'package:compassscan/model/user_model.dart';
 
 import 'dart:async';
 

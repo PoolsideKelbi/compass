@@ -1,5 +1,5 @@
-import 'package:compass_try03/utility/rest_datasource.dart';
-import 'package:compass_try03/model/user_model.dart';
+import 'package:compassscan/utility/rest_datasource.dart';
+import 'package:compassscan/model/user_model.dart';
 
 
 

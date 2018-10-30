@@ -1,5 +1,5 @@
-import 'package:compass_try03/view/home_screen.dart';
-import 'package:compass_try03/view/login_screen.dart';
+import 'package:compassscan/view/home_screen.dart';
+import 'package:compassscan/view/login_screen.dart';
 
 import 'package:flutter/material.dart';
 

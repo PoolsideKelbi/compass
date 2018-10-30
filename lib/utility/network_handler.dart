@@ -1,4 +1,4 @@
-import 'package:compass_try03/utility/constants_handler.dart' as constants show ResponseErrors;
+import 'package:compassscan/utility/constants_handler.dart' as constants show ResponseErrors;
 
 import 'dart:async';
 import 'dart:convert';

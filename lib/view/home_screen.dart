@@ -1,8 +1,8 @@
-import 'package:compass_try03/model/user_model.dart';
-import 'package:compass_try03/utility/auth_handler.dart';
-import 'package:compass_try03/utility/scan_handler.dart';
-import 'package:compass_try03/utility/constants_handler.dart' as constants show HomeScreen, Assets;
-import 'package:compass_try03/view/dialog_widget.dart' show showResponseDialogWithColor;
+import 'package:compassscan/model/user_model.dart';
+import 'package:compassscan/utility/auth_handler.dart';
+import 'package:compassscan/utility/scan_handler.dart';
+import 'package:compassscan/utility/constants_handler.dart' as constants show HomeScreen, Assets;
+import 'package:compassscan/view/dialog_widget.dart' show showResponseDialogWithColor;
 
 import 'package:flutter/material.dart';
 

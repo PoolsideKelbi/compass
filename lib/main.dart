@@ -1,6 +1,6 @@
-import 'package:compass_try03/utility/connectivity_handler.dart' as connectivity show initialize;
-import 'package:compass_try03/utility/route_handler.dart';
-import 'package:compass_try03/utility/auth_handler.dart' as auth;
+import 'package:compassscan/utility/connectivity_handler.dart' as connectivity show initialize;
+import 'package:compassscan/utility/route_handler.dart';
+import 'package:compassscan/utility/auth_handler.dart' as auth;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
